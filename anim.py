@@ -20,7 +20,10 @@ def main():
 
 
 for n in N:
-    m = np.linspace((-M/2), M/2, M)
+    lines = 8
+    frames = 256//lines
+    # m = np.linspace((-M/2), M/2, M*4)
+    m = np.linspace((-M / 2), M / 2, frames*2)
     fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
     line, = ax.plot([], [], 'r')
     plt.axis('off')
@@ -31,7 +34,7 @@ for n in N:
         return line,
 
 
-    an = anim.FuncAnimation(fig, updateChart, frames=m, interval=40, repeat=True, blit=True)
+    an = anim.FuncAnimation(fig, updateChart, frames=m, interval=lines/100, repeat=True, blit=True)
     an.save('aliasing/animation.gif', writer='imagemagick', fps=60)
     plt.show()
 

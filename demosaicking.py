@@ -16,6 +16,7 @@ XTRANS = [
     [0, 1, 1, 2, 1, 1]
 ]
 
+
 def CFA(img, type):
     mask = BAYER if type == 'BAYER' else XTRANS
 
@@ -31,6 +32,7 @@ def CFA(img, type):
     im_pil.save(f'demosaicking/{type}-mosaic.png')
 
     return img2
+
 
 def interpolate(img, type, depth):
     out = deepcopy(img)
@@ -68,12 +70,14 @@ def interpolate(img, type, depth):
 
     return img2
 
+
 def getDiff(img1, img2):
     diff = abs(img1 - img2)
 
     imgCV = cv2.cvtColor(diff, cv2.COLOR_BGR2RGB)
     im_pil = Image.fromarray(imgCV)
     im_pil.save(f'demosaicking/diff.png')
+
 
 def main():
     img = cv2.imread('4demosaicking.bmp')
@@ -85,6 +89,7 @@ def main():
     xtransCFA = CFA(img_rgb, 'XTRANS')
     xtransInterpolated = interpolate(xtransCFA, 'XTRANS', 2)
     getDiff(img_rgb, xtransInterpolated)
+
 
 if __name__ == '__main__':
     main()
